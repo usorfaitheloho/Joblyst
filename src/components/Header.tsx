@@ -1,17 +1,43 @@
-const Header = ({ title }) => {
+import logo from "../assets/logo-mobile.svg";
+import iconDown from "../assets/icon-chevron-down.svg";
+import iconUp from "../assets/icon-chevron-up.svg";
+import ellipsis from "../assets/icon-vertical-ellipsis.svg";
+import { useState } from "react";
+
+interface HeaderProps {
+  title: string;
+}
+
+const Header = ({ title }: HeaderProps) => {
+  const [openDropdown, setOpenDropDown] = useState<boolean>(false);
   return (
-    <header className="flex flex-items px-5 py-5 justify-between bg-white border-light-gray">
-      <div className="flex flex-items gap-x-4">
-        <img src="/src/assets/logo-mobile.svg" alt="logo-img" />
-        <p className="text-black font-bold text-lg">{title}</p>
-        <img src="/src/assets/react.svg" />
-      </div>
-      <div className="flex flex-items gap-x-4">
-        <button className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 py-2 flex items-center justify-center">
-          <img src="/src/assets/icon-add-task-mobile.svg" alt="icon-mobile" />
-        </button>
-      </div>
-    </header>
+      <header className="fixed left-0 right-0 z-50 flex items-center justify-between p-4 text-black bg-white">
+        {/* Left Side */}
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <img src={logo} alt="logo" className="w-6 h-6" />
+          <h3 className="hidden font-sans font-bold md:inline-block md:text-4xl">
+            kanban
+          </h3>
+          <div className="flex items-center">
+            <h3 className="truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans">
+              {title}
+            </h3>
+
+            <img
+              src={openDropdown ? iconUp : iconDown}
+              alt="dropdown icon"
+              className="w-3 ml-2 cursor-pointer md:hidden"
+              onClick={() => setOpenDropDown((prev) => !prev)}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-4 md:space-x-6">
+          <button className="button">+ Add New Job</button>
+          <button className="px-3 py-1 button md:hidden">+</button>
+          <img src={ellipsis} alt="elipsis" className="h-6 cursor-pointer" />
+        </div>
+      </header>
   );
 };
 
