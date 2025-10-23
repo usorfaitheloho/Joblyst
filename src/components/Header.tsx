@@ -4,11 +4,11 @@ import iconUp from "../assets/icon-chevron-up.svg";
 import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { useState } from "react";
 
-interface HeaderProps {
-  title: string;
-}
+// interface HeaderProps {
+//   title: string;
+// }
 
-const Header = ({ title }: HeaderProps) => {
+const Header = () => {
   const [openDropdown, setOpenDropDown] = useState<boolean>(false);
   return (
       <header className="fixed left-0 right-0 z-50 flex items-center justify-between p-4 text-black bg-white">
@@ -20,7 +20,7 @@ const Header = ({ title }: HeaderProps) => {
           </h3>
           <div className="flex items-center">
             <h3 className="truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans">
-              {title}
+              board Name
             </h3>
 
             <img
