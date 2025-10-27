@@ -3,15 +3,19 @@ import iconDown from "../assets/icon-chevron-down.svg";
 import iconUp from "../assets/icon-chevron-up.svg";
 import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { useState } from "react";
+import HeaderDropdown from "./HeaderDropdown";
 
 // interface HeaderProps {
 //   title: string;
 // }
 
 const Header = () => {
+  
   const [openDropdown, setOpenDropDown] = useState<boolean>(false);
+  
   return (
-      <header className="fixed left-0 right-0 z-50 flex items-center justify-between p-4 text-black bg-white">
+    <div className="fixed left-0 right-0 z-50 p-4 bg-white">
+       <header className="flex items-center justify-between text-black bg-white">
         {/* Left Side */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <img src={logo} alt="logo" className="w-6 h-6" />
@@ -37,7 +41,15 @@ const Header = () => {
           <button className="px-3 py-1 button md:hidden">+</button>
           <img src={ellipsis} alt="elipsis" className="h-6 cursor-pointer" />
         </div>
+       
       </header>
+        {
+        openDropdown && <HeaderDropdown setOpenDropDown={setOpenDropDown}/> 
+      }
+    </div>
+     
+
+     
   );
 };
 
