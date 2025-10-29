@@ -14,8 +14,8 @@ const Header = () => {
   const [openDropdown, setOpenDropDown] = useState<boolean>(false);
   
   return (
-    <div className="fixed left-0 right-0 z-50 p-4 bg-white">
-       <header className="flex items-center justify-between text-black bg-white">
+    <div className="fixed left-0 right-0 z-50 p-4 bg-white dark:bg-[#2b2c37]">
+       <header className="flex items-center justify-between dark:text-white">
         {/* Left Side */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <img src={logo} alt="logo" className="w-6 h-6" />
