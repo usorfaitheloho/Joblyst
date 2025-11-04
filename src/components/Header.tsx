@@ -4,12 +4,13 @@ import iconUp from "../assets/icon-chevron-up.svg";
 import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { useState } from "react";
 import HeaderDropdown from "./HeaderDropdown";
+import AddEditBoardModal from "../modals/AddEditBoardModal";
 
 // interface HeaderProps {
 //   title: string;
 // }
 
-const Header = () => {
+const Header = ({boardModalOpen, setBoardModalOpen}) => {
   
   const [openDropdown, setOpenDropDown] = useState<boolean>(false);
   
@@ -44,7 +45,12 @@ const Header = () => {
        
       </header>
         {
-        openDropdown && <HeaderDropdown setOpenDropDown={setOpenDropDown}/> 
+        openDropdown && <HeaderDropdown  setBoardModalOpen={setBoardModalOpen}
+        setOpenDropDown={setOpenDropDown}/> 
+      }
+      
+      {
+        boardModalOpen && <AddEditBoardModal  setBoardModalOpen={setBoardModalOpen} />
       }
     </div>
      

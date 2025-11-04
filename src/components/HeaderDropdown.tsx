@@ -6,18 +6,33 @@ import { Switch } from "@headlessui/react";
 import useDarkMode from "../Hooks/useDarkMode";
 import { useState } from "react";
 
-function HeaderDropdown({ setOpenDropDown }) {
+interface Board {
+  name: string;
+  isActive: boolean;
+  columns?: unknown[];
+}
+
+interface RootState {
+  boards: Board[];
+}
+
+interface HeaderDropdownProps {
+  setOpenDropDown: (value: boolean) => void;
+  setBoardModalOpen:(value: boolean) => void;
+}
+
+function HeaderDropdown({ setBoardModalOpen,setOpenDropDown }: HeaderDropdownProps) {
   const [colorTheme, setTheme] = useDarkMode();
   const [darkSide, setDarkSide] = useState(
     colorTheme === "light" ? true : false
   );
 
-  const toggleDarkMode = (checked) => {
+  const toggleDarkMode = (checked: boolean) => {
     setTheme(colorTheme);
     setDarkSide(checked);
   };
 
-  const boards = useSelector((state) => state.boards);
+  const boards = useSelector((state: RootState) => state.boards);
 
   return (
     <div
@@ -36,7 +51,7 @@ function HeaderDropdown({ setOpenDropDown }) {
           ALL BOARDS({boards?.length})
         </h3>
         <div>
-          {boards.map((board, index: number) => (
+          {boards.map((board: Board, index: number) => (
             <div
               className={`flex items-baseline space-x-2 px-5 py-4 text-gray-600 dark:text-white
                 ${
@@ -50,9 +65,17 @@ function HeaderDropdown({ setOpenDropDown }) {
             </div>
           ))}
 
-          <div className="flex items-baseline space-x-2 text-[#635fc7] px-5 py-4">
+          <div 
+            className="flex items-baseline space-x-2 text-[#635fc7] px-5 py-4"
+            onClick={()=> {
+              setBoardModalOpen(true)
+              setOpenDropDown(false)
+            }}
+          >
             <img src={boardIcon} className="h-4" />
-            <p className="text-lg font-bold">Create New Board</p>
+            <p className="text-lg font-bold">
+              Create New Board
+            </p>
           </div>
 
           <div
