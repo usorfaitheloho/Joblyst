@@ -5,14 +5,22 @@ import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { useState } from "react";
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
+import { useDispatch, useSelector } from "react-redux";
 
-// interface HeaderProps {
-//   title: string;
-// }
+interface HeaderProps {
+  boardModalOpen: boolean;
+  setBoardModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Header = ({boardModalOpen, setBoardModalOpen}) => {
+const Header = ({boardModalOpen, setBoardModalOpen}: HeaderProps) => {
+  
+  const dispatch = useDispatch()  
   
   const [openDropdown, setOpenDropDown] = useState<boolean>(false);
+  const [boardType,setBoardType] = useState<"add" | "edit">('add')
+  
+  const boards = useSelector((state) => state.boards)
+  const board = boards.find(board => board.isActive)
   
   return (
     <div className="fixed left-0 right-0 z-50 p-4 bg-white dark:bg-[#2b2c37]">
@@ -25,7 +33,7 @@ const Header = ({boardModalOpen, setBoardModalOpen}) => {
           </h3>
           <div className="flex items-center">
             <h3 className="truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans">
-              board Name
+              {board.name}
             </h3>
 
             <img
@@ -50,7 +58,7 @@ const Header = ({boardModalOpen, setBoardModalOpen}) => {
       }
       
       {
-        boardModalOpen && <AddEditBoardModal  setBoardModalOpen={setBoardModalOpen} />
+        boardModalOpen && <AddEditBoardModal type={boardType}  setBoardModalOpen={setBoardModalOpen} />
       }
     </div>
      
