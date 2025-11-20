@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import crossIcon from "../assets/icon-cross.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import boardsSlice from "../redux/boardsSlice";
 
 interface AddEditBoardModalProps {
@@ -15,13 +15,32 @@ function AddEditBoardModal({
 }: AddEditBoardModalProps) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const board = useSelector((state) => state.boards).find(
+    (board) => board.isActive
+  );
 
   const [newColumns, setNewColumns] = useState([
     { name: "Todo", task: [], id: uuidv4() },
     { name: "Doing", task: [], id: uuidv4() },
   ]);
+
+  // Initialize form fields when editing an existing board.
+  // Use useEffect to avoid setting state during render.
+  useEffect(() => {
+    if (type === "edit" && isFirstLoad && board) {
+      setNewColumns(
+        board.columns.map((col) => {
+          return { ...col, id: uuidv4() };
+        })
+      );
+      setName(board.name);
+      setIsFirstLoad(false);
+    }
+  }, [type, isFirstLoad, board]);
 
   const handleOnChange = (id: string, newValue: string) => {
     setNewColumns((prevState) => {
